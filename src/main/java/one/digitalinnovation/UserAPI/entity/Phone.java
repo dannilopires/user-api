@@ -8,6 +8,7 @@ import one.digitalinnovation.UserAPI.enums.PhoneyType;
 
 import javax.persistence.*;
 
+@Entity
 @Data //Adiciona getters e setters
 @Builder //Padrão de projeto e construção de objetos
 @AllArgsConstructor  //Adiciona construtores
