@@ -11,7 +11,7 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-YYYY")
+    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-yyyy")
     User toModel(UserDTO userDTO);
 
     UserDTO toDTO(User user);
