@@ -2,27 +2,25 @@ package one.digitalinnovation.UserAPI.controller;
 
 import one.digitalinnovation.UserAPI.dto.MessageResponseDTO;
 import one.digitalinnovation.UserAPI.entity.User;
-import one.digitalinnovation.UserAPI.repository.UserRepository;
+import one.digitalinnovation.UserAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(("/api/v1/users"))
 public class UserController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDTO createUser(@RequestBody User user) {
-        User userSaved = userRepository.save(user);
-        return MessageResponseDTO
-                .builder()
-                .message("Created user with ID " + userSaved.getId())
-                .build();
+        return userService.createUser(user);
     }
 }
