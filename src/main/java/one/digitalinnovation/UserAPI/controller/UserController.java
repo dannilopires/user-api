@@ -31,4 +31,10 @@ public class UserController {
     public List<UserDTO> listAll() {
         return userService.listAll();
     }
+
+    @GetMapping("/{id}")
+    public UserDTO findById(@PathVariable Long id) throws Exception{
+        return userService.findById(id);
+
+    }
 }
