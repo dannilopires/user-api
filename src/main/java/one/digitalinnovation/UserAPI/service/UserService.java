@@ -41,9 +41,14 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    private User verifyIfExists(Long id) throws UserNotFoundException {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
     public UserDTO findById(Long id) throws UserNotFoundException {
-        User user = userRepository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException(id));
+        User user = verifyIfExists(id);
+
         return userMapper.toDTO(user);
 
         /*Optional<User> optionalUser = userRepository.findById(id);
@@ -52,5 +57,11 @@ public class UserService {
         }
         return userMapper.toDTO(optionalUser.get());
         */
+    }
+
+    public void delete(Long id) throws UserNotFoundException {
+        User user = verifyIfExists(id);
+
+        userRepository.deleteById(id);
     }
 }

@@ -2,6 +2,7 @@ package one.digitalinnovation.UserAPI.controller;
 
 import one.digitalinnovation.UserAPI.dto.MessageResponseDTO;
 import one.digitalinnovation.UserAPI.dto.request.UserDTO;
+import one.digitalinnovation.UserAPI.exception.UserNotFoundException;
 import one.digitalinnovation.UserAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDTO findById(@PathVariable Long id) throws Exception{
+    public UserDTO findById(@PathVariable Long id) throws UserNotFoundException{
         return userService.findById(id);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws UserNotFoundException {
+        userService.delete(id);
     }
 }
