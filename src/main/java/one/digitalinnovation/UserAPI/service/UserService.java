@@ -42,11 +42,15 @@ public class UserService {
     }
 
     public UserDTO findById(Long id) throws UserNotFoundException {
-        Optional<User> optionalUser = userRepository.findById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException(id));
+        return userMapper.toDTO(user);
 
+        /*Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new UserNotFoundException(id);
         }
         return userMapper.toDTO(optionalUser.get());
+        */
     }
 }
