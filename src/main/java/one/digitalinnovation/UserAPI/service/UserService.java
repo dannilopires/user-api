@@ -8,6 +8,9 @@ import one.digitalinnovation.UserAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service //Indica que a classe será responsável por todas as regras de negócio da app
 public class UserService {
     private UserRepository userRepository;
@@ -27,5 +30,12 @@ public class UserService {
                 .builder()
                 .message("Created user with ID " + savedUser.getId())
                 .build();
+    }
+
+    public List<UserDTO> listAll() {
+        List<User> userList = userRepository.findAll();
+        return userList.stream()
+                .map(userMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
