@@ -28,10 +28,7 @@ public class UserService {
         User userToSave = userMapper.toModel(userDTO);
 
         User savedUser = userRepository.save(userToSave);
-        return MessageResponseDTO
-                .builder()
-                .message("Created user with ID " + savedUser.getId())
-                .build();
+        return createMessageResponse(savedUser.getId(), "Created user with ID ");
     }
 
     public List<UserDTO> listAll() {
@@ -39,11 +36,6 @@ public class UserService {
         return userList.stream()
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
-    }
-
-    private User verifyIfExists(Long id) throws UserNotFoundException {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public UserDTO findById(Long id) throws UserNotFoundException {
@@ -63,5 +55,26 @@ public class UserService {
         User user = verifyIfExists(id);
 
         userRepository.deleteById(id);
+    }
+
+    public MessageResponseDTO updateById(Long id, UserDTO userDTO) throws UserNotFoundException {
+        verifyIfExists(id);
+
+        User userToUpdate = userMapper.toModel(userDTO);
+
+        User updateUser = userRepository.save(userToUpdate);
+        return createMessageResponse(updateUser.getId(), "Updated user with ID ");
+    }
+
+    private User verifyIfExists(Long id) throws UserNotFoundException {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    private MessageResponseDTO createMessageResponse(Long id, String message) {
+        return MessageResponseDTO
+                .builder()
+                .message(message + id)
+                .build();
     }
 }
