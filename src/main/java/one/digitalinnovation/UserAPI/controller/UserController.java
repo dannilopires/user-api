@@ -1,5 +1,6 @@
 package one.digitalinnovation.UserAPI.controller;
 
+import lombok.AllArgsConstructor;
 import one.digitalinnovation.UserAPI.dto.MessageResponseDTO;
 import one.digitalinnovation.UserAPI.dto.request.UserDTO;
 import one.digitalinnovation.UserAPI.exception.UserNotFoundException;
@@ -13,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(("/api/v1/users"))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

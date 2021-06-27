@@ -1,5 +1,6 @@
 package one.digitalinnovation.UserAPI.service;
 
+import lombok.AllArgsConstructor;
 import one.digitalinnovation.UserAPI.dto.MessageResponseDTO;
 import one.digitalinnovation.UserAPI.dto.request.UserDTO;
 import one.digitalinnovation.UserAPI.entity.User;
@@ -14,15 +15,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service //Indica que a classe será responsável por todas as regras de negócio da app
+@AllArgsConstructor(onConstructor = @__(@Autowired)) //Com essa anotação, não precisamos implementar o construtor
 public class UserService {
     private final UserRepository userRepository;
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public MessageResponseDTO createUser(UserDTO userDTO) {
         User userToSave = userMapper.toModel(userDTO);
