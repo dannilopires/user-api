@@ -44,4 +44,10 @@ public class UserController {
     public void deleteById(@PathVariable Long id) throws UserNotFoundException {
         userService.delete(id);
     }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateById(@PathVariable Long id, @RequestBody @Valid UserDTO  userDTO) throws UserNotFoundException {
+        return userService.updateById(id, userDTO);
+
+    }
 }
